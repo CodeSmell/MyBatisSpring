@@ -1,0 +1,45 @@
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="codesmell.bookmarks.dao.BookmarkDao">
+  <resultMap id="BookmarkMap" type="codesmell.bookmarks.Bookmark">
+    <id property="bookmarkId" column="bookmark_id" />
+    <result property="bookmarkUrl" column="bookmark_url" />
+    <result property="bookmarkTitle" column="bookmark_title" />
+  </resultMap>
+
+  <select id="getBookmark" resultMap="BookmarkMap">
+    SELECT bookmark_id,
+    bookmark_title, bookmark_url
+    FROM bookmark
+    WHERE bookmark_id =
+    #{bookmarkId}
+  </select>
+
+  <select id="getAllBookmarks" resultMap="BookmarkMap">
+    SELECT * FROM bookmark
+  </select>
+
+  <insert id="addBookmark" parameterType="codesmell.bookmarks.Bookmark"
+    useGeneratedKeys="true" keyProperty="bookmarkId" keyColumn="bookmark_id">
+    INSERT INTO bookmark
+    (bookmark_title, bookmark_url)
+    VALUES
+    (#{bookmarkTitle}, #{bookmarkUrl})
+  </insert>
+
+  <delete id="deleteBookmark" parameterType="int">
+    DELETE FROM bookmark
+    WHERE bookmark_id = #{bookmarkId}
+  </delete>
+
+  <update id="updateBookmark" parameterType="codesmell.bookmarks.Bookmark">
+    UPDATE bookmark SET 
+      bookmark_title = #{bookmarkTitle},
+      bookmark_url = #{bookmarkUrl}
+    WHERE bookmark_id = #{bookmarkId}
+  </update>
+</mapper>
+   
+ 
